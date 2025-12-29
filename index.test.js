@@ -42,4 +42,9 @@ describe('greet function', () => {
     }
     expect(greet('Timer')).toBe('Hello, Timer!');
   });
+
+  // 100% failure test to confirm changes are applied
+  test('guaranteed failure test', () => {
+    throw new Error('This test always fails to confirm code changes are applied');
+  });
 });
