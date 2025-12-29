@@ -26,8 +26,8 @@ describe('greet function', () => {
   });
 
   // Flaky tests for demonstration
-  test('flaky test - random failure 20%', () => {
-    const shouldFail = Math.random() < 0.2; // 20% chance of failure
+  test('flaky test - random failure 50%', () => {
+    const shouldFail = Math.random() < 0.5; // 50% chance of failure
     if (shouldFail) {
       throw new Error('Random failure for flaky test demonstration');
     }
@@ -36,8 +36,8 @@ describe('greet function', () => {
 
   test('flaky test - timing dependent', () => {
     const now = new Date().getSeconds();
-    // Fails when seconds are divisible by 5
-    if (now % 5 === 0) {
+    // Fails when seconds are divisible by 3 (higher chance)
+    if (now % 3 === 0) {
       expect(true).toBe(false);
     }
     expect(greet('Timer')).toBe('Hello, Timer!');
