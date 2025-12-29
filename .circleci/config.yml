@@ -1,14 +1,46 @@
 version: 2.1
 
-jobs:
-  hello-job:
+orbs:
+  node: circleci/node@5.1.0
+
+executors:
+  node-executor:
     docker:
-      - image: cimg/node:17.2.0 # the primary container, where your job's commands are run
+      - image: cimg/node:18.17
+    working_directory: ~/project
+
+jobs:
+  install-dependencies:
+    executor: node-executor
     steps:
-      - checkout # check out the code in the project directory
-      - run: echo "hello world" # run the `echo` command
+      - checkout
+      - node/install-packages:
+          pkg-manager: npm
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - node_modules
+            - package-lock.json
+
+  test:
+    executor: node-executor
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/project
+      - run:
+          name: Run Tests
+          command: npm test
+      - store_test_results:
+          path: test-results
+      - store_artifacts:
+          path: test-results
 
 workflows:
-  my-workflow:
+  version: 2
+  test-workflow:
     jobs:
-      - hello-job
+      - install-dependencies
+      - test:
+          requires:
+            - install-dependencies
