@@ -24,4 +24,22 @@ describe('greet function', () => {
   test('should handle undefined input', () => {
     expect(greet(undefined)).toBe('Hello, World!');
   });
+
+  // Flaky tests for demonstration
+  test('flaky test - random failure 20%', () => {
+    const shouldFail = Math.random() < 0.2; // 20% chance of failure
+    if (shouldFail) {
+      throw new Error('Random failure for flaky test demonstration');
+    }
+    expect(greet('Flaky')).toBe('Hello, Flaky!');
+  });
+
+  test('flaky test - timing dependent', () => {
+    const now = new Date().getSeconds();
+    // Fails when seconds are divisible by 5
+    if (now % 5 === 0) {
+      expect(true).toBe(false);
+    }
+    expect(greet('Timer')).toBe('Hello, Timer!');
+  });
 });
