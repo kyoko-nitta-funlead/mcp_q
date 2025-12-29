@@ -25,26 +25,12 @@ describe('greet function', () => {
     expect(greet(undefined)).toBe('Hello, World!');
   });
 
-  // Flaky tests for demonstration
-  test('flaky test - random failure 50%', () => {
-    const shouldFail = Math.random() < 0.5; // 50% chance of failure
-    if (shouldFail) {
-      throw new Error('Random failure for flaky test demonstration');
-    }
-    expect(greet('Flaky')).toBe('Hello, Flaky!');
+  // Additional stable tests
+  test('should handle numeric input', () => {
+    expect(greet(123)).toBe('Hello, 123!');
   });
 
-  test('flaky test - timing dependent', () => {
-    const now = new Date().getSeconds();
-    // Fails when seconds are divisible by 3 (higher chance)
-    if (now % 3 === 0) {
-      expect(true).toBe(false);
-    }
-    expect(greet('Timer')).toBe('Hello, Timer!');
-  });
-
-  // 100% failure test to confirm changes are applied
-  test('guaranteed failure test', () => {
-    throw new Error('This test always fails to confirm code changes are applied');
+  test('should handle boolean input', () => {
+    expect(greet(true)).toBe('Hello, true!');
   });
 });
